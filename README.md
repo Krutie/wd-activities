@@ -6,6 +6,7 @@ Both activities can be viewed online at: https://wd-activities.surge.sh/
 ### Profile Page
 **Route:** http://localhost:3000/
 **Profile View Component Tree**
+```
 --|ProfileWrapper
 ---|SideBar
 ----|Avatar
@@ -22,10 +23,12 @@ Both activities can be viewed online at: https://wd-activities.surge.sh/
 -------|Toggle
 --------|AccordionText
 ----|Spacer
+```
 
 ### SlideShow Page
 **Route:** http://localhost:3000/slideshow
 **SlideShow View Component Tree**
+```
 --|Carousel
 ---|Container
 ----|LeftArrow
@@ -33,7 +36,7 @@ Both activities can be viewed online at: https://wd-activities.surge.sh/
 ----|RightArrow
 -----|Control
 ----|CarouselImage
-
+```
 
 ### Getting Started with Create React App
 
