@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from 'styled-components';
+import { Route, Switch, Link } from 'react-router-dom';
+
+import { Profile } from './Views/Profile';
+import { SlideShow } from './Views/SlideShow';
+
+const NAV = styled.div`
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  & a {
+    padding: 5px;
+  }
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <NAV>
+        <Link to='/'>Home</Link>
+        <Link to='/slideshow'>slideshow</Link>
+      </NAV>
+      <Switch>
+        <Route path='/' component={Profile} exact />
+        <Route path='/slideshow' component={SlideShow} />
+      </Switch>
+    </main>
   );
 }
 
