@@ -1,64 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import gsap from "gsap";
+import { CarouselImageProps, CarouselProps, ControlProps, } from './CarouselTypes';
+import { LeftArrow, RightArrow, Container, CarouselImageWrapper } from './CarouselStyledComponents';
+import { slide } from './CarouselUtils';
 
-const Arrow = styled.div`
-  cursor: pointer;
-  font-size: 2rem;
-  position: fixed;
-  top: 50%;
-`;
-
-const LeftArrow = styled(Arrow)`
-  left: 1rem;
-  position: absolute;
-  z-index: 1;
-`;
-
-const RightArrow = styled(Arrow)`
-  right: 1rem;
-  position: absolute;
-  z-index: 1;
-`;
-
-const Container = styled.div<ContainerProps>`
-  height: ${(props) => props.height + "px"};
-  width: ${(props) => props.width + "px"};
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  position: absolute;
-`;
-
-const CarouselImageWrapper = styled.div<ContainerProps>`
-  height: ${(props) => props.height + "px"};
-  width: ${(props) => props.width + "px"};
-`;
-
-interface ContainerProps {
-  width: number;
-  height: number;
-}
-
-interface CarouselImageProps {
-  src: string;
-}
-
-interface CarouselProps {
-  width: number;
-  height: number;
-  items: CarouselImageProps[];
-}
-
-interface ControlProps {
-  symbol: string;
-  handler: (e: React.MouseEvent<HTMLDivElement>) => void;
-}
-
-interface TransitionMap {
-  [index: string]: void []
-}
-
+// CarouselImage COMPONENT
 const CarouselImage: React.FC<CarouselImageProps> = ({ src }) => {
   const styles = {
     backgroundImage: `url(${src})`,
@@ -71,9 +16,13 @@ const CarouselImage: React.FC<CarouselImageProps> = ({ src }) => {
   return <div id="slide" style={styles}></div>;
 };
 
+// Control COMPONENT
 const Control: React.FC<ControlProps> = ({ handler, symbol }) => {
   return <div onClick={handler}> {symbol}</div>;
 };
+
+
+// PARENT COMPONENT
 
 export const Carousel: React.FC<CarouselProps> = ({ items, width, height }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -89,34 +38,20 @@ export const Carousel: React.FC<CarouselProps> = ({ items, width, height }) => {
     if(el && direction) slide(el, direction)
   }
 
-  const slide = (el: HTMLElement, direction: string) => {
-    const left = direction === 'left' ? '5%' : '-5%';
-
-    gsap.fromTo(
-      el,
-      {
-        left,
-        position: "absolute",
-        autoAlpha: 0,
-      },
-      {
-        duration: 1,
-        left: 0,
-        position: "absolute",
-        autoAlpha: 1,
-        ease: "circ",
-      }
-    );
-  }
-
   const handler = (event: KeyboardEvent): void[] => {
-
-    const transitionMap: TransitionMap = {
-      'ArrowLeft': [setActiveIndex(clickLeftIndex), animateSlide("left")],
-      'ArrowRight': [setActiveIndex(clickRightIndex), animateSlide("right")]
+    let returnHandler;
+    switch (event.key) {
+      case 'ArrowLeft':
+        returnHandler = [setActiveIndex(clickLeftIndex), animateSlide("left")]
+        break;
+      case 'ArrowRight':
+        returnHandler = [setActiveIndex(clickRightIndex), animateSlide("right")]
+        break;
+      default:
+        returnHandler = []
+        break;
     }
-    
-    return transitionMap[event.key] || [];
+    return returnHandler;
   };
 
   useEffect(() => {

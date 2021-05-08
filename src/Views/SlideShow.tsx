@@ -12,8 +12,6 @@ export const SlideShow = () => {
       { src: "/images/photo3.jpeg" },
       { src: "/images/photo4.jpeg" },
       { src: "/images/photo5.jpeg" },
-      // { src: "/images/photo6.jpeg" },
-      // { src: "/images/photo7.jpeg" },
     ],
   };
 
