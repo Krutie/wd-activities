@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { CarouselImageProps, CarouselProps, ControlProps, } from './CarouselTypes';
-import { LeftArrow, RightArrow, Container, CarouselImageWrapper } from './CarouselStyledComponents';
-import { slide } from './CarouselUtils';
+import { CarouselImageProps, CarouselProps, ControlProps, } from './Types';
+import { LeftArrow, RightArrow, Container, CarouselImageWrapper } from './StyledComponents';
+import { slide } from './Utils';
 
 // CarouselImage COMPONENT
 const CarouselImage: React.FC<CarouselImageProps> = ({ src }) => {
@@ -38,27 +38,27 @@ export const Carousel: React.FC<CarouselProps> = ({ items, width, height }) => {
     if(el && direction) slide(el, direction)
   }
 
-  const handler = (event: KeyboardEvent): void[] => {
-    let returnHandler;
+  const keyboardEventHandler = (event: KeyboardEvent): void[] => {
+    let handler: void[];
     switch (event.key) {
       case 'ArrowLeft':
-        returnHandler = [setActiveIndex(clickLeftIndex), animateSlide("left")]
+        handler = [setActiveIndex(clickLeftIndex), animateSlide("left")]
         break;
       case 'ArrowRight':
-        returnHandler = [setActiveIndex(clickRightIndex), animateSlide("right")]
+        handler = [setActiveIndex(clickRightIndex), animateSlide("right")]
         break;
       default:
-        returnHandler = []
+        handler = []
         break;
     }
-    return returnHandler;
+    return handler;
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handler, false);
+    document.addEventListener("keydown", keyboardEventHandler, false);
     // Clean up event listener
     return () => {
-      document.removeEventListener("keydown", handler, false);
+      document.removeEventListener("keydown", keyboardEventHandler, false);
     }
   });
 
@@ -84,6 +84,7 @@ export const Carousel: React.FC<CarouselProps> = ({ items, width, height }) => {
       </RightArrow>
 
       <CarouselImageWrapper height={height} width={width}>
+        <pre> Try with LeftArrow and RightArrow keys.</pre>
         <CarouselImage src={items[activeIndex].src}></CarouselImage>
       </CarouselImageWrapper>
     </Container>
