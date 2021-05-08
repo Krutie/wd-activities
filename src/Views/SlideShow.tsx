@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Carousel } from "../Components/ui/Carousel";
+import { CarouselImageProps } from '../Components/ui/Carousel/Types';
 
 export const SlideShow = () => {
   const carousel = {
@@ -14,6 +15,17 @@ export const SlideShow = () => {
       { src: "/images/photo5.jpeg" },
     ],
   };
+
+  function preloadImages(items: CarouselImageProps[]) {
+    items.forEach((item: CarouselImageProps) => {
+      const img = new Image()
+      img.src = item.src
+    })
+  }
+  
+  useEffect(() => {
+    preloadImages(carousel.items)
+  }, [carousel.items])
 
   return (
     <div className="App">
