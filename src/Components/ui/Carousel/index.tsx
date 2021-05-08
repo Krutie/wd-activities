@@ -84,6 +84,7 @@ export const Carousel: React.FC<CarouselProps> = ({ items, width, height }) => {
       </RightArrow>
 
       <CarouselImageWrapper height={height} width={width}>
+        <pre>Try using LeftArrow and RightArrow keys.</pre>
         <CarouselImage src={items[activeIndex].src}></CarouselImage>
       </CarouselImageWrapper>
     </Container>
